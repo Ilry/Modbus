@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src='../static/js/vue.min.js'></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.1.0/dist/echarts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-echarts@4.0.2"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="../static/css/index1.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/Login1Style.css" type="text/css" />
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div id="f" class="front">
+            <div class="contents">
+                <h3 @click="change1">USER LOGIN</h3>
+                <el-row>
+                    <el-input placeholder="输入用户名" v-model="name" clearable></el-input>
+                </el-row>
+                <el-row>
+                    <el-input placeholder="请输入内容" v-model="pwd" show-password clearable></el-input>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-button type="primary" @click="login1" round>登录</el-button>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-button type="danger" @click="del1" round>取消</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+        <div id="b" class="back">
+            <div class="contents">
+                <h3 @click="change2">ADMIN LOGIN</h3>
+                <el-row>
+                    <el-input placeholder="输入用户名" v-model="adname" clearable></el-input>
+                </el-row>
+                <el-row>
+                    <el-input placeholder="请输入内容" v-model="adpwd" show-password clearable></el-input>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-button type="primary" @click="login2" round>登录</el-button>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-button type="danger" @click="del2" round>取消</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    name: '',
+                    pwd: '',
+                    adname: '',
+                    adpwd: '',
+                }
+            },
+            methods: {
+                login1() {
+
+                    if (this.name == '' || this.pwd == '') {
+                        alert("密码或用户名为空！！");
+                    } else {
+                        axios.post('/user', {
+                            name: this.name,
+                            pwd: this.pwd
+                        })
+                            .then(function (response) {
+                                console.log(response.status)
+                                if (parseInt(response.status) === 200 && response.data == 'True') {
+                                    window.location.href = 'User_Box1_table'
+                                }
+                                else {
+                                    window.location.href = 'user'
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error.response);
+                            });
+                    }
+                },
+                login2() {
+                    if (this.adname == '' || this.adpwd == '') {
+                        alert("密码或用户名为空！！");
+                    } else {
+                        axios.post('/ad', {
+                            name: this.adname,
+                            pwd: this.adpwd
+                        })
+                            .then(function (response) {
+                                console.log(response.status)
+                                if (parseInt(response.status) === 200 && response.data == 'True') {
+                                    window.location.href = 'Box1_table'
+                                }
+                                else {
+                                    window.location.href = 'user'
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error.response);
+                            });
+                    }
+                },
+                del2() {
+                    this.name = '';
+                    this.pwd = '';
+                },
+                del2() {
+                    this.adname = '';
+                    this.adpwd = '';
+                },
+                change1() {
+                    var front = document.getElementById("f");
+                    var back = document.getElementById("b");
+                    front.style.transform = "rotateY(-180deg)";
+                    back.style.transform = "rotateY(0deg)";
+                },
+                change2() {
+                    var front = document.getElementById("f");
+                    var back = document.getElementById("b");
+                    front.style.transform = "rotateY(0deg)";
+                    back.style.transform = "rotateY(180deg)";
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

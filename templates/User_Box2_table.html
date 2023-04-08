@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+
+    <script src='../static/js/vue.min.js'></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.1.0/dist/echarts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-echarts@4.0.2"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+
+    <link rel="stylesheet" href="../static/css/index1.css" type="text/css" />
+</head>
+
+<body>
+    <div id="app">
+        <el-container style="height: 740px; border: 1px solid #eee">
+            <el-aside width="200px" style="background-color:#545c64">
+                <el-menu :default-opened="['1','5']" background-color="#545c64" text-color="#fff"
+                    active-text-color="#ffd04b" :unique-opened="true">
+                    <el-submenu index="1">
+                        <template slot="title"><i class="el-icon-office-building"></i>发酵罐一</template>
+                        <el-submenu index="1-1">
+                            <template slot="title"><i class="el-icon-menu"></i>历史数据显示</template>
+                            <el-menu-item index="1-1-1">
+                                <i class="el-icon-tickets"></i>
+                                <a @click="User_Box1_table">表格</a>
+                            </el-menu-item>
+                            <el-menu-item index="1-1-2">
+                                <i class="el-icon-data-line"></i>
+                                <a @click="User_Box1_line">折线图</a>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item index="1-2">
+                            <i class="el-icon-stopwatch"></i>
+                            <a @click="User_Box1_chart">仪表盘</a>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+
+                        <template slot="title"><i class="el-icon-office-building"></i>发酵罐二</template>
+                        <el-submenu index="2-1">
+                            <template slot="title"><i class="el-icon-menu"></i>历史数据显示</template>
+                            <el-menu-item index="2-1-1">
+                                <i class="el-icon-tickets"></i>
+                                <a @click="User_Box2_table">表格</a>
+                            </el-menu-item>
+                            <el-menu-item index="2-1-2">
+                                <i class="el-icon-data-line"></i>
+                                <a @click="User_Box2_line">折线图</a>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item index="2-2">
+                            <i class="el-icon-stopwatch"></i>
+                            <a @click="User_Box2_chart">仪表盘</a>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title"><i class="el-icon-office-building"></i>发酵罐三</template>
+                        <el-submenu index="3-1">
+                            <template slot="title"><i class="el-icon-menu"></i>历史数据显示</template>
+                            <el-menu-item index="3-1-1">
+                                <i class="el-icon-tickets"></i>
+                                <a @click="User_Box3_table">表格</a>
+                            </el-menu-item>
+                            <el-menu-item index="3-1-2">
+                                <i class="el-icon-data-line"></i>
+                                <a @click="User_Box3_line">折线图</a>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item index="3-2">
+                            <i class="el-icon-stopwatch"></i>
+                            <a @click="User_Box3_chart">仪表盘</a>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="4">
+                        <template slot="title"><i class="el-icon-office-building"></i>发酵罐四</template>
+                        <el-submenu index="4-1">
+                            <template slot="title"><i class="el-icon-menu"></i>历史数据显示</template>
+                            <el-menu-item index="4-1-1">
+                                <i class="el-icon-tickets"></i>
+                                <a @click="User_Box4_table">表格</a>
+                            </el-menu-item>
+                            <el-menu-item index="4-1-2">
+                                <i class="el-icon-data-line"></i>
+                                <a @click="User_Box4_line">折线图</a>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item index="4-2">
+                            <i class="el-icon-stopwatch"></i>
+                            <a @click="User_Box4_chart">仪表盘</a>
+                        </el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-main>
+                <el-table :data="Box_1.slice((curpage-1)*pagesize,curpage*pagesize)" height="666" v-loading="loading"
+                    stripe border>
+                    <el-table-column prop="id" label="编号">
+                    </el-table-column>
+                    <el-table-column prop="CO2" label="CO2浓度">
+                    </el-table-column>
+                    <el-table-column prop="O2" label="O2浓度">
+                    </el-table-column>
+                    <el-table-column prop="CH3CH2OH" label="酒精浓度">
+                    </el-table-column>
+                    <el-table-column prop="CH3CH2COOH" label="乙酸浓度">
+                    </el-table-column>
+                    <el-table-column prop="PH" label="酸碱度">
+                    </el-table-column>
+                    <el-table-column prop="pressure" label="压强">
+                    </el-table-column>
+                    <el-table-column prop="time" label="时间">
+                    </el-table-column>
+                </el-table>
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                    :current-page="curpage" :page-sizes="[10, 20, 30, 40, 50]" :page-size="pagesize" :total="Box.length"
+                    layout="total, sizes, prev, pager, next, jumper" background>
+                </el-pagination>
+            </el-main>
+        </el-container>
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            components: {
+                'v-chart': VueECharts
+            },
+            data() {
+                return {
+                    loading: true,
+                    Box_1: [],
+                    Box: {
+                        'id': 0,
+                        'PH': 0,
+                        'CO2': 0,
+                        'O2': 0,
+                        'CH3CH2OH': 0,
+                        'CH3CH2COOH': 0,
+                        'pressure': 0,
+                        'time': ''
+                    },
+                    pagesize: 10,
+                    curpage: 1,//当前页的页码
+                    page: 11,
+                }
+            },
+            mounted() {
+
+                setInterval(() => {
+                    // this.data = [];
+                    //this.Box_1 = [];
+                    axios
+                        .get('/Box2')
+                        .then(response => (this.Box = response.data))
+                        .catch(function (error) { // 请求失败处理
+                            console.log(error);
+                        });
+                    if (this.Box.length == 1) {
+                        this.Box_1[0] = this.Box
+                    }
+                    else {
+                        for (var i = 0; i < this.Box.length; i++) {
+                            this.Box_1[i] = this.Box[i]
+                        }
+                    }
+                    this.page = Math.ceil(this.Box.length / this.pagesize)
+                    this.loading = false
+                }, 1000)
+
+            },
+            watch: {
+                curpage: function (oldValue, newValue) {
+                    console.log(arguments);
+                }
+            },
+            methods: {
+                handleSizeChange: function (val) {
+                    this.pagesize = val;
+                },
+                handleCurrentChange: function (curpage) {
+                    this.curpage = curpage;
+                },
+                User_Box1_table: function () {
+                    location.href = '/User_Box1_table';
+                },
+                User_Box1_chart: function () {
+                    location.href = '/User_Box1_chart';
+                },
+                User_Box1_line: function () {
+                    location.href = '/User_Box1_line';
+                },
+                User_Box2_table: function () {
+                    location.href = '/User_Box2_table';
+                },
+                User_Box2_chart: function () {
+                    location.href = '/User_Box2_chart';
+                },
+                User_Box2_line: function () {
+                    location.href = '/User_Box2_line';
+                },
+                User_Box3_table: function () {
+                    location.href = '/User_Box3_table';
+                },
+                User_Box3_chart: function () {
+                    location.href = '/User_Box3_chart';
+                },
+                User_Box3_line: function () {
+                    location.href = '/User_Box3_line';
+                },
+                User_Box4_table: function () {
+                    location.href = '/User_Box4_table';
+                },
+                User_Box4_chart: function () {
+                    location.href = '/User_Box4_chart';
+                },
+                User_Box4_line: function () {
+                    location.href = '/User_Box4_line';
+                },
+
+            }
+        })
+    </script>
+</body>
+
+</html>
